@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int** generate(int numRows, int* returnSize, int** returnColumnSizes) {
     // Definindo o tamanho do retorno
@@ -13,7 +14,7 @@ int** generate(int numRows, int* returnSize, int** returnColumnSizes) {
     int i, j;
     for (i = 0; i < numRows; i++) {
         // Gera o tamanho da linha atual com base no index da linha
-        *returnColumnSizes[i] = i + 1;
+        (*returnColumnSizes)[i] = i + 1;
 
         //Aloca memória para a linha atual do triangulo
         triangle[i] = (int*)malloc((i + 1) * sizeof(int));
@@ -33,19 +34,32 @@ int** generate(int numRows, int* returnSize, int** returnColumnSizes) {
 }
 
 void PrintTriangle(int** triangle, int numRows, int* returnColumnSizes) {
-    for (int i = 0; i < numRows; i++) {
-        for (int j = 0; j < returnColumnSizes[i]; j++) {
+    int i, j;
+    for (i = 0; i < numRows; i++) {
+        for (j = 0; j < returnColumnSizes[i]; j++) {
             printf("%d ", triangle[i][j]);
         }
         printf("\n");
     }
 }
 
+void FreeTriangle(int** triangle, int numRows, int* returnColumnSizes){
+    int i;
+    // Liberar a memória das linhas do triângulo
+    for (i = 0; i < numRows; i++) {
+        free(triangle[i]);
+    }
+    // Liberar a memória do ponteiro das linhas
+    free(triangle);
+    // Liberar a memória dos tamanhos das colunas
+    free(returnColumnSizes);
+}
+
 
 int main() {
     int numRows;
 
-    printf("Digite o número de linhas para o Triângulo de Pascal: ");
+    printf("Digite o numero de linhas para o Triangulo de Pascal: ");
     scanf("%d", &numRows);
 
     int returnSize;
@@ -53,8 +67,7 @@ int main() {
     int** triangle = generate(numRows, &returnSize, &returnColumnSizes);
     PrintTriangle(triangle, numRows, returnColumnSizes);
 
-    free(triangle);
-    free(returnColumnSizes);
+    FreeTriangle(triangle, numRows, returnColumnSizes);
 
     return 0;
 }
