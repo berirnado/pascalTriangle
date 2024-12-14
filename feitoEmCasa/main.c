@@ -32,6 +32,16 @@ int** generate(int numRows, int* returnSize, int** returnColumnSizes) {
     return triangle;
 }
 
+void PrintTriangle(int** triangle, int numRows, int* returnColumnSizes) {
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < returnColumnSizes[i]; j++) {
+            printf("%d ", triangle[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+
 int main() {
     int numRows;
 
@@ -40,7 +50,11 @@ int main() {
 
     int returnSize;
     int* returnColumnSizes;
-    generate(numRows, &returnSize, &returnColumnSizes);
+    int** triangle = generate(numRows, &returnSize, &returnColumnSizes);
+    PrintTriangle(triangle, numRows, returnColumnSizes);
+
+    free(triangle);
+    free(returnColumnSizes);
 
     return 0;
 }
