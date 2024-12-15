@@ -2,6 +2,10 @@
 #include <stdlib.h>
 
 int** generate(int numRows, int* returnSize, int** returnColumnSizes) {
+    if(numRows <= 0){
+        printf("O número de linhas deve ser maior que 0.\n");
+        return NULL;
+    }
     // Definindo o tamanho do retorno
     *returnSize = numRows;
 
